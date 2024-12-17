@@ -1,2 +1,2 @@
 # ash_cqrs
-CQRS Implementation for the 
+CQRS implementation as a DSL for the ash framework
