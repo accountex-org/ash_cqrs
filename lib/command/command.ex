@@ -33,13 +33,6 @@ defmodule AshCqrs.Command do
   @command_handler %Spark.Dsl.Section{
     name: :command_handler,
     schema: [
-      handler_for: [
-        type: {:spark, AshCqrs.Command},
-        doc: """
-        The `AshCqrs.Commands.Command` to be handled by this handler.
-        """,
-        require: true
-      ],
       handle_with_action: [
         type: {:spark, Ash.Resource.Actions.Action},
         doc: """

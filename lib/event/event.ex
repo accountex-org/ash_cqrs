@@ -19,7 +19,8 @@ defmodule AshCqrs.Event do
       ressources: [
         type: {:list, Ash.Resource},
         doc: "A list of ressources required by the event.",
-        default: false
+        required: false,
+        default: []
       ],
       event_handler: [
         type: {:spark, AshCqrs.EventHandler},

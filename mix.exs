@@ -48,7 +48,6 @@ defmodule AshCqrs.MixProject do
   defp deps do
     [
       {:ash, ash_version("~> 3.0")},
-      {:spark, "~> 2.2.36"},
       {:reactor, "~> 0.10.3"},
       # dev/test dependencies
       {:git_ops, "~> 2.5", only: [:dev, :test]},

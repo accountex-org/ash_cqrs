@@ -2,7 +2,7 @@ defmodule AshCqrs.CommandTest do
   use ExUnit.Case
   doctest Cqrs
 
-  defmodule TestResource
+  defmodule TestResource do
     use Ash.Resource,
       domain: CommandTest.Domain,
       data_layer: Ash.DataLayer.Ets,
@@ -34,7 +34,4 @@ defmodule AshCqrs.CommandTest do
     end
   end
 
-  test "greets the world" do
-    assert Cqrs.hello() == :world
-  end
 end
