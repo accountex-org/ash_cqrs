@@ -1,6 +1,8 @@
 defmodule AshCqrs.Query do
   @moduledoc """
-  An extension for creating a query. See the getting started guide for more.
+  An extension for creating a Query that will be applied to a read model.
+
+  See the getting started guide for more.
   """
 
   @query %Spark.Dsl.Section{
@@ -25,7 +27,25 @@ defmodule AshCqrs.Query do
     ]
   }
 
-  @sections [@query]
+  @query_handler %Spark.Dsl.Section{
+    name: :query_handler,
+    schema: [
+      handler_for: [
+        type: {:spark, AshCqrs.Query},
+        doc: """
+        The `AshCqrs.Query` to be handled.
+        """,
+        require: true
+      ],
+      handle_with: [
+        type: {:spark, Ash.Resource.Actions.Action},
+        doc: "The `Ash.Resource.Actions.Action` used to handle the query.",
+        required: true
+      ]
+    ]
+  }
+
+  @sections [@query, @query_handler]
   @transformers []
 
   use Spark.Dsl.Extension,

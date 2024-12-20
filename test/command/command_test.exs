@@ -2,7 +2,7 @@ defmodule AshCqrs.CommandTest do
   use ExUnit.Case
   doctest Cqrs
 
-  defmodule Command do
+  defmodule TestResource
     use Ash.Resource,
       domain: CommandTest.Domain,
       data_layer: Ash.DataLayer.Ets,
@@ -13,16 +13,24 @@ defmodule AshCqrs.CommandTest do
     end
 
     command do
-      pre_check_identities_with AshCqrs.CommandTest.Domain
-      transfer_resource AshDoubleEntryTest.Transfer
-      balance_resource AshDoubleEntryTest.Balance
-      open_action_accept [:allow_zero_balance]
+      command_name :test_command
+      command_handler
     end
 
+
     attributes do
-      attribute :allow_zero_balance, :boolean do
+      attribute :is_active, :boolean do
         default true
       end
+    end
+  end
+
+
+  defmodule Domain do
+    use Ash.Domain
+
+    resources do
+      resource TestResource
     end
   end
 

@@ -1,14 +1,14 @@
-defmodule AshCqrs.Command do
+defmodule AshCqrs.Event do
   @moduledoc """
-  An extension for creating a command. See the getting started guide for more.
+  An extension for creating a event. See the getting started guide for more.
   """
 
-  @command %Spark.Dsl.Section{
-    name: :command,
+  @event %Spark.Dsl.Section{
+    name: :event,
     schema: [
-      command_name: [
+      event_name: [
         type: {:atom},
-        doc: "A unique name of the command.",
+        doc: "A unique name of the event.",
         required: true
       ],
       pre_check_identities_with: [
@@ -18,32 +18,32 @@ defmodule AshCqrs.Command do
       ],
       ressources: [
         type: {:list, Ash.Resource},
-        doc: "A list of ressources required by the command.",
+        doc: "A list of ressources required by the event.",
         default: false
       ],
-      command_handler: [
-        type: {:spark, AshCqrs.CommandHandler},
-        doc: "The handler for the command execution.",
+      event_handler: [
+        type: {:spark, AshCqrs.EventHandler},
+        doc: "The handler for the event execution.",
         required: true
       ]
     ]
   }
 
 
-  @command_handler %Spark.Dsl.Section{
-    name: :command_handler,
+  @event_handler %Spark.Dsl.Section{
+    name: :event_handler,
     schema: [
       handler_for: [
-        type: {:spark, AshCqrs.Command},
+        type: {:spark, AshCqrs.Event},
         doc: """
-        The `AshCqrs.Commands.Command` to be handled by this handler.
+        The `AshCqrs.Events.Event` to be handled by this handler.
         """,
         require: true
       ],
       handle_with_action: [
         type: {:spark, Ash.Resource.Actions.Action},
         doc: """
-        The `Ash.Resource.Actions.Action` used to handle the command.
+        The `Ash.Resource.Actions.Action` used to handle the event.
 
         Mutually exclusive with the `handle_with_saga` option.
         """,
@@ -52,7 +52,7 @@ defmodule AshCqrs.Command do
       handle_with_saga: [
         type: {:spark, Ash.Reactor},
         doc: """
-        The `Ash.Reactor` used to handle the command.
+        The `Ash.Reactor` used to handle the event.
 
         Mutually exclusive with the `handle_with_action` option.
         """,
@@ -61,7 +61,7 @@ defmodule AshCqrs.Command do
     ]
   }
 
-  @sections [@command, @command_handler]
+  @sections [@event, @event_handler]
   @transformers []
 
   use Spark.Dsl.Extension,

@@ -6,6 +6,7 @@ defmodule AshCqrs.MixProject do
   An implementation of the CQRS pattern for the Ash framework.
   """
 
+  # Project information
   def project do
     [
       app: :ash_cqrs,
@@ -30,6 +31,7 @@ defmodule AshCqrs.MixProject do
     ]
   end
 
+  # Package definition
   defp package do
     [
       name: :ash_cqrs,
@@ -42,6 +44,24 @@ defmodule AshCqrs.MixProject do
     ]
   end
 
+  # Project dependencies.
+  defp deps do
+    [
+      {:ash, ash_version("~> 3.0")},
+      {:spark, "~> 2.2.36"},
+      {:reactor, "~> 0.10.3"},
+      # dev/test dependencies
+      {:git_ops, "~> 2.5", only: [:dev, :test]},
+      {:ex_doc, github: "elixir-lang/ex_doc", only: [:dev, :test], runtime: false},
+      {:ex_check, "~> 0.14", only: [:dev, :test]},
+      {:credo, ">= 0.0.0", only: [:dev, :test], runtime: false},
+      {:dialyxir, ">= 0.0.0", only: [:dev, :test], runtime: false},
+      {:sobelow, ">= 0.0.0", only: [:dev, :test], runtime: false},
+      {:mix_audit, ">= 0.0.0", only: [:dev, :test], runtime: false}
+    ]
+  end
+
+  # Mix aliases
   defp aliases do
     [
       sobelow: "sobelow --skip",
@@ -61,6 +81,7 @@ defmodule AshCqrs.MixProject do
     ]
   end
 
+  # Package Documentation
   defp docs do
     [
       main: "readme",
@@ -96,33 +117,20 @@ defmodule AshCqrs.MixProject do
       ],
       groups_for_modules: [
         Introspection: [
-          AshCqrs.Command.Info,
+          AshCqrs.Commands.Info,
         ],
         Entities: [
-          AshCqrs.Commmand,
+          AshCqrs.Commands.Commmand,
         ],
         Types: [
-          AshCqrs.Command
+          AshCqrs.Commands.Command
         ],
         AshCqrs: ~r/AshCqrs.*/
       ]
     ]
   end
 
-  # Run "mix help deps" to learn about dependencies.
-  defp deps do
-    [
-      {:ash, ash_version("~> 3.0")},
-      # dev/test dependencies
-      {:git_ops, "~> 2.5", only: [:dev, :test]},
-      {:ex_doc, github: "elixir-lang/ex_doc", only: [:dev, :test], runtime: false},
-      {:ex_check, "~> 0.14", only: [:dev, :test]},
-      {:credo, ">= 0.0.0", only: [:dev, :test], runtime: false},
-      {:dialyxir, ">= 0.0.0", only: [:dev, :test], runtime: false},
-      {:sobelow, ">= 0.0.0", only: [:dev, :test], runtime: false},
-      {:mix_audit, ">= 0.0.0", only: [:dev, :test], runtime: false}
-    ]
-  end
+
 
   defp ash_version(default_version) do
     case System.get_env("ASH_VERSION") do
