@@ -1,60 +1,41 @@
-defmodule AshCqrs.Command do
+defmodule AshCqrs.DataSource do
   @moduledoc """
-  An extension for creating a command. See the getting started guide for more.
+  An extension for declaring a data source. See the getting started guide for more.
   """
 
-  @command %Spark.Dsl.Section{
-    name: :command,
+  @data_source %Spark.Dsl.Section{
+    name: :datasource,
+      doc: """
+      Please note that the :write_to and :read_from domains should preferably use two different `Ecto.Repo`
+      to take advantage of the CQRS pattern.
+
+      For better scalability the :read_fom domain could use a different `Ash.DataLayer` optimized for reading.
+      """,
     schema: [
-      command_name: [
+      datasource_name: [
         type: {:atom},
-        doc: "A unique name of the command.",
+        doc: "A unique atom identifying the data source.",
         required: true
       ],
-      pre_check_identities_with: [
-        type: {:spark, Ash.Domain},
-        doc: "A domain to use to precheck generated identities. Required by certain data layers.",
-        required: false
-      ],
-      ressources: [
-        type: {:list, Ash.Resource},
-        doc: "A list of ressources required by the command.",
-        default: false
-      ],
-      command_handler: [
-        type: {:spark, AshCqrs.CommandHandler},
-        doc: "The handler for the command execution.",
+      write_to: [
+        type: {:atom, Ash.Domain},
+        doc: """
+        The `Ash.Domain` with normalized ressources to write to.
+        """,
         required: true
-      ]
+      ],
+      read_from: [
+        type: {:atom, Ash.Domain},
+        doc: """
+        The `Ash.Domain` with ressources optimized for reading from.
+        """,
+        required: true
+      ],
     ]
   }
 
 
-  @command_handler %Spark.Dsl.Section{
-    name: :command_handler,
-    schema: [
-      handle_with_action: [
-        type: {:spark, Ash.Resource.Actions.Action},
-        doc: """
-        The `Ash.Resource.Actions.Action` used to handle the command.
-
-        Mutually exclusive with the `handle_with_saga` option.
-        """,
-        required: false
-      ],
-      handle_with_saga: [
-        type: {:spark, Ash.Reactor},
-        doc: """
-        The `Ash.Reactor` used to handle the command.
-
-        Mutually exclusive with the `handle_with_action` option.
-        """,
-        required: false
-      ]
-    ]
-  }
-
-  @sections [@command, @command_handler]
+  @sections [@data_source]
   @transformers []
 
   use Spark.Dsl.Extension,
