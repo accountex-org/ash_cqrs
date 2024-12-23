@@ -9,7 +9,7 @@ defmodule AshCqrs.Query do
     name: :query,
     schema: [
       name: [
-        type: {:atom},
+        type: :atom,
         doc: """
         The name of the query.
         """,
@@ -27,18 +27,7 @@ defmodule AshCqrs.Query do
     ]
   }
 
-  @query_handler %Spark.Dsl.Section{
-    name: :query_handler,
-    schema: [
-      handle_with: [
-        type: {:spark, Ash.Resource.Actions.Action},
-        doc: "The `Ash.Resource.Actions.Action` used to handle the query.",
-        required: true
-      ]
-    ]
-  }
-
-  @sections [@query, @query_handler]
+  @sections [@query]
   @transformers []
 
   use Spark.Dsl.Extension,

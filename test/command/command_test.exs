@@ -2,6 +2,7 @@ defmodule AshCqrs.CommandTest do
   use ExUnit.Case
   doctest Cqrs
 
+  # Ressource to be used in tests
   defmodule TestResource do
     use Ash.Resource,
       domain: CommandTest.Domain,
@@ -13,8 +14,8 @@ defmodule AshCqrs.CommandTest do
     end
 
     command do
-      command_name :test_command
-      command_handler
+      command_name: CommandTest.Command1,
+      command_handler: CommandTest.CommandHandler1
     end
 
 
@@ -25,7 +26,7 @@ defmodule AshCqrs.CommandTest do
     end
   end
 
-
+  # Domain to be used in tests
   defmodule Domain do
     use Ash.Domain
 
@@ -33,5 +34,4 @@ defmodule AshCqrs.CommandTest do
       resource TestResource
     end
   end
-
 end
