@@ -56,7 +56,8 @@ defmodule AshCqrs.MixProject do
       {:credo, ">= 0.0.0", only: [:dev, :test], runtime: false},
       {:dialyxir, ">= 0.0.0", only: [:dev, :test], runtime: false},
       {:sobelow, ">= 0.0.0", only: [:dev, :test], runtime: false},
-      {:mix_audit, ">= 0.0.0", only: [:dev, :test], runtime: false}
+      {:mix_audit, ">= 0.0.0", only: [:dev, :test], runtime: false},
+      {:wallaby, "~> 0.30.9", only: [:test], runtime: false}
     ]
   end
 

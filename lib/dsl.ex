@@ -1,4 +1,4 @@
-defmodule Cqrs do
+defmodule AshCqrs.Dsl do
   @moduledoc """
   Top level DSL for the CQRS extension.
 
@@ -49,4 +49,37 @@ defmodule Cqrs do
   No changes should ever be made directly to the ressources of the query side.
 
   """
+
+  @cqrs %Spark.Dsl.Section{
+    name: :cqrs,
+    schema: [
+      name: [
+        type: :atom,
+        doc: "A unique atom identifying the data source.",
+        required: true
+      ],
+      write_to: [
+        type: {:spark, Ash.Domain},
+        doc: """
+        The `Ash.Domain` with normalized ressources to write to.
+        """,
+        required: true
+      ],
+      read_from: [
+        type: {:spark, Ash.Domain},
+        doc: """
+        The `Ash.Domain` with ressources optimized for reading from.
+        """,
+        required: true
+      ],
+    ]
+  }
+
+
+  @sections [@cqrs]
+  @transformers []
+
+  use Spark.Dsl.Extension,
+    sections: @sections,
+    transformers: @transformers
 end
