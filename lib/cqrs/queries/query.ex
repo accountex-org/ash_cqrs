@@ -22,8 +22,7 @@ defmodule AshCqrs.Queries.Query do
           Ash.Reactor
         ]},
       doc: """
-      Either an `Ash.Resource.Actions.Action` for simple querying or an
-      `Ash.Reactor` for more complex query handling.
+      Either a simple `Ash.Resource.Actions.Action` or an `Ash.Reactor` for more complex logic handling.
       """
     ],
     args: [

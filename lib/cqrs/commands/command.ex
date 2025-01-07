@@ -17,13 +17,9 @@ defmodule AshCqrs.Commands.Command do
       required: false
     ],
     handler: [
-      type: {:one_of, [
-          Ash.Resource.Actions.Action,
-          Ash.Reactor
-        ]},
+      type: {:one_of, [Ash.Resource.Actions.Action, Ash.Reactor]},
       doc: """
-      Either an `Ash.Resource.Actions.Action` for simple handlingg or an
-      `Ash.Reactor` for more complex business logic handling.
+      Either a simple `Ash.Resource.Actions.Action` or an `Ash.Reactor` for more complex logic handling.
       """
     ],
     args: [

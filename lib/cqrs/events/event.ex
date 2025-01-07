@@ -22,8 +22,7 @@ defmodule AshCqrs.Events.Event do
           {:spark, Ash.Reactor}
         ]},
       doc: """
-      Either an `Ash.Resource.Actions.Action` for simple processing or an
-      `Ash.Reactor` for more complex business logic handling.
+      Either a simple `Ash.Resource.Actions.Action` or an `Ash.Reactor` for more complex logic handling.
       """
     ],
     args: [

@@ -55,7 +55,7 @@ Defines a new command and its handler.
 |------|------|---------|------|
 | [`name`](#commands-command-name){: #commands-command-name .spark-required} | `atom` |  | A unique atom identifying the name of the command. |
 | [`description`](#commands-command-description){: #commands-command-description } | `String.t` |  | An optional description for the command. |
-| [`handler`](#commands-command-handler){: #commands-command-handler } | `Ash.Resource.Actions.Action \| Ash.Reactor` |  | Either an `Ash.Resource.Actions.Action` for simple handlingg or an `Ash.Reactor` for more complex business logic handling. |
+| [`handler`](#commands-command-handler){: #commands-command-handler } | `Ash.Resource.Actions.Action \| Ash.Reactor` |  | Either a simple `Ash.Resource.Actions.Action` or an `Ash.Reactor` for more complex logic handling. |
 | [`args`](#commands-command-args){: #commands-command-args } | `list(module)` |  | The arguments for the command execution. |
 
 

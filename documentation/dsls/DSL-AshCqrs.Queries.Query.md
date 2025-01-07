@@ -55,7 +55,7 @@ Defines a new query and its handler.
 |------|------|---------|------|
 | [`name`](#queries-query-name){: #queries-query-name .spark-required} | `atom` |  | A unique atom identifying the name of the query. |
 | [`description`](#queries-query-description){: #queries-query-description } | `String.t` |  | An optional description for the query. |
-| [`handler`](#queries-query-handler){: #queries-query-handler } | `Ash.Resource.Actions.Action \| Ash.Reactor` |  | Either an `Ash.Resource.Actions.Action` for simple querying or an `Ash.Reactor` for more complex query handling. |
+| [`handler`](#queries-query-handler){: #queries-query-handler } | `Ash.Resource.Actions.Action \| Ash.Reactor` |  | Either a simple `Ash.Resource.Actions.Action` or an `Ash.Reactor` for more complex logic handling. |
 | [`args`](#queries-query-args){: #queries-query-args } | `list(module)` |  | The arguments for the query execution. |
 
 

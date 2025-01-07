@@ -55,7 +55,7 @@ Defines a new event
 |------|------|---------|------|
 | [`name`](#events-event-name){: #events-event-name .spark-required} | `atom` |  | A unique atom identifying the name of the event. |
 | [`description`](#events-event-description){: #events-event-description } | `String.t` |  | An optional description for the event. |
-| [`handler`](#events-event-handler){: #events-event-handler } | `{:spark, Ash.Resource.Actions.Action} \| {:spark, Ash.Reactor}` |  | Either an `Ash.Resource.Actions.Action` for simple processing or an `Ash.Reactor` for more complex business logic handling. |
+| [`handler`](#events-event-handler){: #events-event-handler } | `{:spark, Ash.Resource.Actions.Action} \| {:spark, Ash.Reactor}` |  | Either a simple `Ash.Resource.Actions.Action` or an `Ash.Reactor` for more complex logic handling. |
 | [`args`](#events-event-args){: #events-event-args } | `list(module)` |  | The arguments required for event processing. |
 
 
