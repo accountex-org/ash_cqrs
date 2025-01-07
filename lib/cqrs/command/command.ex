@@ -1,6 +1,8 @@
 defmodule AshCqrs.Command do
   @moduledoc """
-  An extension for creating a command. See the getting started guide for more.
+  An extension for creating a command part of the CQRS system.
+
+  See the getting started guide for more.
   """
 
   # Defines the options schema for the command.
@@ -9,11 +11,6 @@ defmodule AshCqrs.Command do
       type: :atom,
       doc: "A unique atom identifying the name of the command.",
       required: true
-    ],
-    pre_check_identities_with: [
-      type: {:spark, Ash.Domain},
-      doc: "A domain to use to precheck generated identities. Required by certain data layers.",
-      required: false
     ],
     command_handler: [
       type: {:spark, AshCqrs.CommandHandler},
@@ -30,7 +27,7 @@ defmodule AshCqrs.Command do
     """,
     examples: [],
     target: AshCqrs.Command,
-    args: [:command_name, :pre_check_identities_with, :command_handler],
+    args: [:command_name, :command_handler],
     schema: @command_schema
   }
 
@@ -38,7 +35,7 @@ defmodule AshCqrs.Command do
   @commands %Spark.Dsl.Section{
     name: :commands,
     describe: """
-    Configures what commands will be avaliable.
+    Configures what commands will be available in the system.
 
     Commands are used for effectful changes to the system.
     They usually involve some sort of persistence of the data but not necessarily.

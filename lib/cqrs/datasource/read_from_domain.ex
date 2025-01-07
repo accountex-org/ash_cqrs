@@ -10,8 +10,12 @@ defmodule AshCqrs.ReadFromDomain do
 
   @schema [
     domain: [
-      type: :module,
-      doc: "the `ash.domain` to use for writing."
+      type: {:spark, Ash.Domain},
+      doc: """
+      The `Ash.Domain` used for querying data.
+
+      Writing, updating and deleting data should be done using the `AshCqrs.WriteToDomain`
+      """
     ],
   ]
 

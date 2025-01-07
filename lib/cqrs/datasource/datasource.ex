@@ -40,15 +40,15 @@ defmodule AshCqrs.DataSource do
     describe: """
     A section for configuring the domains to use throughout the CQRS pattern.
 
-    A datasource must contain a single `AshCqrs.WriteToDomain`.
-    A datasource must contain a single `AshCqrs.ReadFromDomain` as well.
+    - A datasource must contain a single `AshCqrs.WriteToDomain`.
+    - A datasource must contain a single `AshCqrs.ReadFromDomain` as well.
 
     """,
     examples: [
       """
       datasource do
         write_to_domain MyApp.Domain1
-        read_from MyApp.Domain2
+        read_from_domain: MyApp.Domain2
       end
       """
     ],

@@ -1,5 +1,8 @@
  defmodule AshCqrs.CommandArgument do
-  @moduledoc "Represents an argument to a command."
+  @moduledoc """
+  Represents a possible argument to an 'AshCqrs.Command`.
+  """
+
     defstruct [
       :allow_nil?,
       :type,

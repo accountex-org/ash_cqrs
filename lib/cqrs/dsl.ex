@@ -14,6 +14,10 @@ defmodule AshCqrs.Dsl do
 
   Expressing this duality is the purpose of the `AshCqrs.DataSource`.
 
+  A DataSource must contain a single `AshCqrs.WriteToDomain` and a single `AshCqrs.ReadFromDomain`.
+
+  See the getting started guide for more.
+
   ## Command
 
   The CQRS pattern puts an emphasis on the separation of concerns between updating and querying for data.
@@ -52,34 +56,31 @@ defmodule AshCqrs.Dsl do
 
   @cqrs %Spark.Dsl.Section{
     name: :cqrs,
+    describe: "General configuration for the CQRS extension.",
+    examples: [
+      """
+      cqrs do
+        description \"\"\"
+        Commands and Queries definition for my application.
+        \"\"\"
+      end
+      """
+    ],
     schema: [
-      name: [
-        type: :atom,
-        doc: "A unique atom identifying the data source.",
-        required: true
-      ],
-      write_to: [
-        type: {:spark, Ash.Domain},
+      description: [
+        type: :string,
         doc: """
-        The `Ash.Domain` with normalized ressources to write to.
-        """,
-        required: true
-      ],
-      read_from: [
-        type: {:spark, Ash.Domain},
-        doc: """
-        The `Ash.Domain` with ressources optimized for reading from.
-        """,
-        required: true
-      ],
+        A description for the CQRS application.
+        """
+      ]
     ]
   }
 
 
   @sections [@cqrs]
-  @transformers []
+  @verifiers []
 
   use Spark.Dsl.Extension,
     sections: @sections,
-    transformers: @transformers
+    verifiers: @verifiers
 end

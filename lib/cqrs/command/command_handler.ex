@@ -1,9 +1,10 @@
 defmodule AshCqrs.CommandHandler do
   @moduledoc """
-  An extension for creating a command handler. See the getting started guide for more.
+  A DSL section for creating command handlers.
+   See the getting started guide for more.
   """
 
-  @command_handler %Spark.Dsl.Section{
+  @command_handler_schema %Spark.Dsl.Section{
     name: :command_handler,
     schema: [
       handle_with: [
@@ -16,10 +17,52 @@ defmodule AshCqrs.CommandHandler do
         `Ash.Reactor` for more complex business logic handling.
         """
       ],
+      arguments: [
+        type: list({:spark, AshCqrs.CommandArgument}),
+        doc: """
+        The arguments for the command handler.
+        """,
+        required: false
+      ]
     ]
   }
 
-  @sections [@command_handler]
+  # Defines the entity constructor for a command handler.
+  @command_handler %Spark.Dsl.Entity{
+    name: :command_handler,
+    describe: """
+    Declares a new command handler that will be used to handle an incoming `AshCqrs.Command``.
+    """,
+    examples: [],
+    target: AshCqrs.CommandHandler,
+    args: [:handle_with, :arguments],
+    schema: @command_handler_schema
+  }
+
+  # Declares the command handlers section
+  @command_handlers %Spark.Dsl.Section{
+    name: :command_handlers,
+    describe: """
+    Configures command handlers that will be used to handle incoming `AshCqrs.Command`s.
+
+    ## Example
+
+    ```elixir
+    command_handlers do
+      command_handler
+        name: :handle_create_user do,
+        handle_with: MyApp.Users.Create,
+        arguments: [
+          user: :user
+        ]
+      end
+    ```
+    """,
+    entities: [@command_handler],
+  }
+
+
+  @sections [@command_handlers]
   @transformers []
 
   use Spark.Dsl.Extension,

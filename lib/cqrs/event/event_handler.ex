@@ -1,40 +1,67 @@
 defmodule AshCqrs.EventHandler do
   @moduledoc """
-  An extension for creating an event handler. See the getting started guide for more.
+  A DSL section for creating event handlers.
+  See the getting started guide for more.
   """
-
-  @event_handler %Spark.Dsl.Section{
+  @event_handler_schema %Spark.Dsl.Section{
     name: :event_handler,
     schema: [
-      handler_for: [
-        type: {:spark, AshCqrs.EventHandler},
+      handle_with: [
+        type: {:one_of, [
+            Ash.Resource.Actions.Action,
+            Ash.Reactor
+          ]},
         doc: """
-        The `AshCqrs.EventHandler` to be handled by this handler.
-        """,
-        require: true
+        Either an `Ash.Resource.Actions.Action` for simple processing or an
+        `Ash.Reactor` for more complex business logic handling.
+        """
       ],
-      handle_with_action: [
-        type: {:spark, Ash.Resource.Actions.Action},
+      arguments: [
+        type: list({:spark, AshCqrs.EventArgument}),
         doc: """
-        The `Ash.Resource.Actions.Action` used to handle the event.
-
-        Mutually exclusive with the `handle_with_saga` option.
-        """,
-        required: false
-      ],
-      handle_with_saga: [
-        type: {:spark, Ash.Reactor},
-        doc: """
-        The `Ash.Reactor` used to handle the event.
-
-        Mutually exclusive with the `handle_with_action` option.
+        The arguments for the event handler.
         """,
         required: false
       ]
     ]
   }
 
-  @sections [ @event_handler]
+  # Defines the entity constructor for a event handler.
+  @event_handler %Spark.Dsl.Entity{
+    name: :event_handler,
+    describe: """
+    Declares a new event handler that will be used to handle an incoming `AshCqrs.Event``.
+    """,
+    examples: [],
+    target: AshCqrs.EventHandler,
+    args: [:handle_with, :arguments],
+    schema: @event_handler_schema
+  }
+
+  # Declares the event handlers section
+  @event_handlers %Spark.Dsl.Section{
+    name: :event_handlers,
+    describe: """
+    Configures event handlers that will be used to handle incoming `AshCqrs.Event`s.
+
+    ## Example
+
+    ```elixir
+    event_handlers do
+      event_handler
+        name: :handle_create_user do,
+        handle_with: MyApp.Users.Create,
+        arguments: [
+          user: :user
+        ]
+      end
+    ```
+    """,
+    entities: [@event_handler],
+  }
+
+
+  @sections [@event_handlers]
   @transformers []
 
   use Spark.Dsl.Extension,
