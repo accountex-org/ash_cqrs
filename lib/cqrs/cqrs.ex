@@ -36,35 +36,46 @@ defmodule AshCqrs.Cqrs do
   use Spark.Dsl,
     default_extensions: [extensions: [AshCqrs.Dsl]],
     opt_schema: [
-      # TODO: Define ash types for the events bus
       events_bus: [
-        type: AshCqrs.EventBus,
+        type: {:spark, AshCqrs.EventBus},
         doc: """
         The event bus to use for processing events.
         """,
         required: true,
         default: :event_bus
+      ],
+      domain: [
+        type: {:spark, Ash.Domain},
+        doc: """
+        The domain to use for creating, updating and deleting data.
+        """,
+        required: true
+      ],
+      query_domain: [
+        type: {:spark, Ash.Domain},
+        doc: """
+        The domain to use for querying data.
+        """,
+        required: true
       ]
     ]
 
-    @type t() :: module
-
+  @type t() :: module
 
   @impl Spark.Dsl
-  def handle_opts(opts) do
+  def handle_opts(_opts) do
     quote do
       @behaviour AshCqrs.Cqrs
 
       @impl AshCqrs.Cqrs
       def cqrs?, do: true
 
-      @persist {:simple_notifiers, unquote(opts[:simple_notifiers])}
     end
   end
 
    @impl Spark.Dsl
   def explain(dsl_state, _opts) do
-    AshCqrs.CqrsInfo.description(dsl_state)
+    AshCqrs.Info.description(dsl_state)
   end
 
 end

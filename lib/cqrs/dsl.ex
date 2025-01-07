@@ -61,7 +61,7 @@ defmodule AshCqrs.Dsl do
       """
       cqrs do
         description \"\"\"
-        Commands and Queries definition for my application.
+        Commands and Queries definition for the blogging application.
         \"\"\"
       end
       """

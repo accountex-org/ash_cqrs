@@ -19,8 +19,8 @@ defmodule AshCqrs.MixProject do
       deps: deps(),
       package: package(),
       docs: docs(),
-      source_url: "https://github.com/acountexorg/ash_cqrs",
-      homepage_url: "https://github.com/acountexorg/ash_cqrs",
+      source_url: "https://github.com/acountex-org/ash_cqrs",
+      homepage_url: "https://github.com/acountex-org/ash_cqrs",
       consolidate_protocols: Mix.env() != :test
     ]
   end
@@ -39,25 +39,8 @@ defmodule AshCqrs.MixProject do
       files: ~w(lib .formatter.exs mix.exs README* LICENSE*
         CHANGELOG* documentation),
       links: %{
-        GitHub: "https://github.com/accountexorg/ash_cqrs"
+        GitHub: "https://github.com/accountex-org/ash_cqrs"
       }
-    ]
-  end
-
-  # Project dependencies.
-  defp deps do
-    [
-      {:ash, ash_version("~> 3.0")},
-      {:reactor, "~> 0.10.3"},
-      # dev/test dependencies
-      {:git_ops, "~> 2.5", only: [:dev, :test]},
-      {:ex_doc, github: "elixir-lang/ex_doc", only: [:dev, :test], runtime: false},
-      {:ex_check, "~> 0.14", only: [:dev, :test]},
-      {:credo, ">= 0.0.0", only: [:dev, :test], runtime: false},
-      {:dialyxir, ">= 0.0.0", only: [:dev, :test], runtime: false},
-      {:sobelow, ">= 0.0.0", only: [:dev, :test], runtime: false},
-      {:mix_audit, ">= 0.0.0", only: [:dev, :test], runtime: false},
-      {:wallaby, "~> 0.30.9", only: [:test], runtime: false}
     ]
   end
 
@@ -72,12 +55,11 @@ defmodule AshCqrs.MixProject do
         "spark.replace_doc_links",
         "spark.cheat_sheets_in_search"
       ],
-      "spark.formatter":
-        "spark.formatter --extensions AshCqrs",
+      "spark.formatter": "spark.formatter --extensions AshCqrs",
       "spark.cheat_sheets":
-        "spark.cheat_sheets --extensions AshDoubleEntry.Account,AshDoubleEntry.Balance,AshDoubleEntry.Transfer",
+        "spark.cheat_sheets --extensions AshCqrs.Commands.Command,AshCqrs.Queries.Query,AshCqrs.Events.Event",
       "spark.cheat_sheets_in_search":
-        "spark.cheat_sheets_in_search --extensions AshDoubleEntry.Account,AshDoubleEntry.Balance,AshDoubleEntry.Transfer"
+        "spark.cheat_sheets_in_search --extensions AshCqrs.Commands.Command,AshCqrs.Queries.Query,AshCqrs.Events.Event"
     ]
   end
 
@@ -111,26 +93,43 @@ defmodule AshCqrs.MixProject do
         "How To": ~r'documentation/how_to',
         Topics: ~r'documentation/topics',
         DSLs: ~r'documentation/dsls',
-        "About AshDoubleEntry": [
+        "About AshCqrs": [
           "CHANGELOG.md"
         ]
       ],
       groups_for_modules: [
         Introspection: [
           AshCqrs.Commands.Info,
+          AshCqrs.Events.Info,
+          AshCqrs.Queries.Info
         ],
         Entities: [
           AshCqrs.Commands.Commmand,
+          AshCqrs.Events.Commmand,
+          AshCqrs.Queries.Commmand
         ],
-        Types: [
-          AshCqrs.Commands.Command
-        ],
+        Types: [],
         AshCqrs: ~r/AshCqrs.*/
       ]
     ]
   end
 
-
+  # Project dependencies.
+  defp deps do
+    [
+      {:ash, ash_version("~> 3.0")},
+      {:reactor, "~> 0.10.3"},
+      # dev/test dependencies
+      {:git_ops, "~> 2.5", only: [:dev, :test]},
+      {:ex_doc, github: "elixir-lang/ex_doc", only: [:dev, :test], runtime: false},
+      {:ex_check, "~> 0.14", only: [:dev, :test]},
+      {:credo, ">= 0.0.0", only: [:dev, :test], runtime: false},
+      {:dialyxir, ">= 0.0.0", only: [:dev, :test], runtime: false},
+      {:sobelow, ">= 0.0.0", only: [:dev, :test], runtime: false},
+      {:mix_audit, ">= 0.0.0", only: [:dev, :test], runtime: false},
+      {:wallaby, "~> 0.30.9", only: [:test], runtime: false}
+    ]
+  end
 
   defp ash_version(default_version) do
     case System.get_env("ASH_VERSION") do
@@ -138,10 +137,10 @@ defmodule AshCqrs.MixProject do
         default_version
 
       "local" ->
-        [path: "../ash", override: true]
+        [path: "../ashcqrs", override: true]
 
       "main" ->
-        [git: "https://github.com/ash-project/ash.git", override: true]
+        [git: "https://github.com/accountex-org/ashcqrs.git", override: true]
 
       version when is_binary(version) ->
         "~> #{version}"
